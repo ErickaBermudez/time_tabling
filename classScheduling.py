@@ -5,7 +5,8 @@ class Schedule:
     def __init__(self, data): 
         self.data = data 
         self.classes = [] 
-        self.number_of_conflicts = 0
+        self.number_of_hard_constraints_violated = 0
+        self.number_of_soft_constraints_violated = 0
         self.fitness = -1
         self.number_of_classes = 0
         self.isFitnessChanged = True
@@ -38,8 +39,8 @@ class Schedule:
         self.isFitnessChanged = True
         return self.classes
     
-    def get_number_of_conflicts(self):
-        return self.number_of_conflicts
+    def get_number_of_hard_constraints_violated(self):
+        return self.number_of_hard_constraints_violated
     
     def get_fitness(self):
         if self.isFitnessChanged == True:
@@ -48,13 +49,13 @@ class Schedule:
         return self.fitness
     
     def calculate_fitness(self):
-        self.number_of_conflicts = 0
+        self.number_of_hard_constraints_violated = 0
         classes = self.get_classes()
 
         for current_class in classes:
             isEnoughCapacity = current_class.get_classroom().get_capacity() >= current_class.get_course().get_max_students()
             if isEnoughCapacity == False:
-                self.number_of_conflicts += 1
+                self.number_of_hard_constraints_violated += 1 
             
             for compare_class in classes:
                 isSameClass = current_class == compare_class
@@ -64,18 +65,18 @@ class Schedule:
                     
                     isClassroomSame = current_class.get_classroom() == compare_class.get_classroom()
                     if isClassroomSame == True:
-                        self.number_of_conflicts += 1
+                        self.number_of_hard_constraints_violated += 1
                     
                     isTeacherSame = current_class.get_teacher() == compare_class.get_teacher()
                     if isTeacherSame == True:
-                        self.number_of_conflicts += 1
+                        self.number_of_hard_constraints_violated += 1
                     
                     isDepartmentSame = current_class.get_department() == compare_class.get_department()
                     if isDepartmentSame == True:
-                        self.number_of_conflicts += 1
+                        self.number_of_soft_constraints_violated += 1
                     
         
-        return 1 / ((1.0 * self.number_of_conflicts + 1))
+        return 1 / ((1.0 * self.number_of_hard_constraints_violated + self.number_of_soft_constraints_violated + 1))
 
 class Population: 
     def __init__(self, size, data): 
@@ -122,11 +123,11 @@ class Display:
 
     def print_generation(self, population):
         print("=> Print generation")
-        print("    Schedule # | Fitness | # of conflicts ")
+        print("    Schedule # | Fitness | # of hard_constraints_violated ")
         schedules = population.get_schedules()
         for index in range(0, len(schedules)):
             schedule = schedules[index]
-            print(f"    {index} | {schedule.get_fitness()} | {schedule.get_number_of_conflicts()} ")
+            print(f"    {index} | {schedule.get_fitness()} | {schedule.get_number_of_hard_constraints_violated()} ")
 
     def print_schedule(self, schedule, index):
         classes = schedule.get_classes()

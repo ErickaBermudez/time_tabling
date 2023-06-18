@@ -23,7 +23,7 @@ def main():
     
     GA = GeneticAlgorithm(data)
 
-    while population.get_schedules()[0].get_fitness() != 1.0:
+    while population.get_schedules()[0].get_number_of_hard_constraints_violated() != 0:
         #print("==> Generation: ", generation_number)
         generation_number += 1
         population = GA.evolve(population)
