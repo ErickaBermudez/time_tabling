@@ -1,10 +1,11 @@
-from resources import Course, Department, Teacher, Period, Classroom, Class
+from resources import Course, Department, Teacher, Period, Classroom
 
 CLASSROOMS = [
-    {'id': 'CL1', 'capacity': 20},
-    {'id': 'CL2', 'capacity': 20},
-    {'id': 'CL3', 'capacity': 25},
+    {'id': 'CL1', 'capacity': 40},
+    {'id': 'CL2', 'capacity': 45},
+    {'id': 'CL3', 'capacity': 50},
     {'id': 'CL4', 'capacity': 40},
+    {'id': 'CL5', 'capacity': 40},
 ]
 
 PERIODS = [
@@ -20,6 +21,10 @@ TEACHERS = [
     {'id': 'T2', 'name': 'Ms. Jones'},
     {'id': 'T3', 'name': 'Mr. Davis'},
     {'id': 'T4', 'name': 'Ms. Williams'},
+    {'id': 'T5', 'name': 'Mr. Brown'},
+    {'id': 'T6', 'name': 'Ms. Miller'},
+    {'id': 'T7', 'name': 'Mr. Wilson'},
+    {'id': 'T8', 'name': 'Ms. Moore'},
 ]
 
 class Data: 
@@ -38,17 +43,21 @@ class Data:
             self.teachers.append(Teacher(teacher['id'], teacher['name']))
         
         self.courses = [
-            Course('CR1', 'Math', [self.teachers[0], self.teachers[1]], 20, 0),
-            Course('CR2', 'Science', [self.teachers[1]], 30, 0),
-            Course('CR3', 'Physics', [self.teachers[0]], 20, 0),
-            Course('CR4', 'English', [self.teachers[2], self.teachers[3]], 25, 0),
-            Course('CR5', 'History', [self.teachers[2]], 30, 0),
-            Course('CR6', 'Translation', [self.teachers[1]], 20, 0)
+            Course('CR1', 'Math', [self.teachers[0], self.teachers[1]], 45, 0),
+            Course('CR2', 'Biology', [self.teachers[2], self.teachers[3]], 50, 0),
+            Course('CR3', 'Physics', [self.teachers[0]], 50, 0),
+            Course('CR4', 'Chemistry', [self.teachers[2], self.teachers[3]], 40, 0),
+            Course('CR5', 'Programming', [self.teachers[0]], 45, 0),
+            Course('CR6', 'English', [self.teachers[4], self.teachers[5]], 50, 0),
+            Course('CR7', 'History', [self.teachers[6]], 40, 0),
+            Course('CR8', 'Translation', [self.teachers[4]], 35, 0),
+            Course('CR9', 'Sociology', [self.teachers[6]], 30, 0),
+            Course('CR10', 'Literature', [self.teachers[7]], 30, 0),
         ]
 
         self.departments = [
-            Department('D1', 'Engineering', [self.courses[0], self.courses[1], self.courses[2]]),
-            Department('D2', 'English', [self.courses[3], self.courses[4], self.courses[5]]),
+            Department('D1', 'Engineering', [self.courses[0], self.courses[1], self.courses[2], self.courses[3], self.courses[4]]),
+            Department('D2', 'English', [self.courses[5], self.courses[6], self.courses[7], self.courses[8], self.courses[9]]),
         ]
 
         self.number_of_classes = 0

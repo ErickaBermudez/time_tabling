@@ -69,6 +69,11 @@ class Schedule:
                     isTeacherSame = current_class.get_teacher() == compare_class.get_teacher()
                     if isTeacherSame == True:
                         self.number_of_conflicts += 1
+                    
+                    isDepartmentSame = current_class.get_department() == compare_class.get_department()
+                    if isDepartmentSame == True:
+                        self.number_of_conflicts += 1
+                    
         
         return 1 / ((1.0 * self.number_of_conflicts + 1))
 
@@ -125,7 +130,6 @@ class Display:
 
     def print_schedule(self, schedule, index):
         classes = schedule.get_classes()
-        print("# Schedule: ", index)
         print("    Class # | Department | Course (number of students) | Teacher | Period | Classroom (capacity)")
         for current_class in classes:
             print_statement = f"{current_class.get_id() } | {current_class.get_department().get_name()} | {current_class.get_course().get_name()} ({current_class.get_course().get_max_students()}) | {current_class.get_teacher().get_name()} | {current_class.get_period().get_time()} | {current_class.get_classroom().get_id()} ({current_class.get_classroom().get_capacity()})"
