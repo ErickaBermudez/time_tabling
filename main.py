@@ -2,6 +2,7 @@ from data import Data
 from classScheduling import Display, Population
 import settings
 from GA import GeneticAlgorithm
+import time
 
 def main():
     print("==> Loading data")
@@ -14,6 +15,8 @@ def main():
     #display.print_data(data)
 
     print("==> Starting genetic algorithm")
+    # Print current time for start
+    print("Time start: ", time.time())
     generation_number = 0
     population = Population(settings.POPULATION_SIZE, data)
     population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
@@ -30,6 +33,7 @@ def main():
         population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)
         #print("Fitness: ", population.get_schedules()[0].get_fitness())
         
+    print("Time end: ", time.time())
     print("==> Genetic algorithm finished")
     print("==> Final population")
     population.get_schedules().sort(key=lambda x: x.get_fitness(), reverse=True)

@@ -50,12 +50,20 @@ class Schedule:
     
     def calculate_fitness(self):
         self.number_of_hard_constraints_violated = 0
+        self.number_of_soft_constraints_violated = 0
+
         classes = self.get_classes()
 
         for current_class in classes:
             isEnoughCapacity = current_class.get_classroom().get_capacity() >= current_class.get_course().get_max_students()
             if isEnoughCapacity == False:
                 self.number_of_hard_constraints_violated += 1 
+            
+            isEngineeringClass = current_class.get_department().get_name() == "Engineering"
+            isAfternoonClass = current_class.get_period().time == "12:00 - 13:00"
+
+            if isEngineeringClass == True and isAfternoonClass == True:
+                self.number_of_soft_constraints_violated += 1
             
             for compare_class in classes:
                 isSameClass = current_class == compare_class
@@ -76,7 +84,7 @@ class Schedule:
                         self.number_of_soft_constraints_violated += 1
                     
         
-        return 1 / ((1.0 * self.number_of_hard_constraints_violated + self.number_of_soft_constraints_violated + 1))
+        return 1 / ((1.0 * self.number_of_hard_constraints_violated + 1))
 
 class Population: 
     def __init__(self, size, data): 
