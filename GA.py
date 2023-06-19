@@ -28,6 +28,19 @@ class GeneticAlgorithm:
             i += 1
         tournament_population.get_schedules().sort(key = lambda x: x.get_fitness(), reverse = True)
         return tournament_population
+    
+    def roulette_wheel_selection(self, population):
+        population_fitness_sum = 0
+        for schedule in population.get_schedules():
+            population_fitness_sum += schedule.get_fitness()
+        population_fitness_sum_half = population_fitness_sum / 2
+        random_value = random.randrange(0, population_fitness_sum_half)
+        spin_fitness_sum = 0
+        for schedule in population.get_schedules():
+            spin_fitness_sum += schedule.get_fitness()
+            if spin_fitness_sum >= random_value:
+                return schedule
+        return population.get_schedules()[random.randrange(0, settings.POPULATION_SIZE)]
 
     def mutate_population(self, population):
         for i in range(settings.ELITISM_COUNT, settings.POPULATION_SIZE):
