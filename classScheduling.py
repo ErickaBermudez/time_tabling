@@ -27,7 +27,7 @@ class Schedule:
                 random_classroom = self.data.get_classrooms()[random.randrange(0, len(self.data.get_classrooms()))]
 
                 random_teacher = course.get_teachers()[random.randrange(0, len(course.get_teachers()))]
-
+                
                 new_class = Class(self.number_of_classes, department, course, random_teacher, random_period, random_classroom)
                 
                 self.classes.append(new_class)
